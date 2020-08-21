@@ -8,25 +8,29 @@ from itertools import permutations
 
 # -*- coding:utf-8 -*-
 class Solution:
+    def __init__(self):
+        self.result = []
+
+    def Permutation(self, ss):
+        # write code here
+        if not ss:
+            return []
+        self.perm(0, ss)
+        return sorted(list(set(self.result)))
+
+    # begin之前位置是固定好了的，现在来选string[begin]
+    def perm(self, begin, string):
+        if begin == len(string) - 1:
+            self.result.append(string)
+            return
+        for i in range(begin, len(string)):
+            temp = string[:begin] + string[i] + string[begin:i] + string[i + 1:]
+            self.perm(begin + 1, temp)
+
+
+class Solution2:
     def Permutation2(self, ss):
         # write code here
         if not ss:
             return []
         return sorted(list(set(map(''.join, permutations(ss)))))
-
-    def Permutation(self, ss):
-        if not ss:
-            return []
-        result = []
-        self.perm(0, ss, result)
-        return sorted(list(set(map(''.join, result))))
-
-    # position之前位置是固定好了的，现在来选string[position]
-    def perm(self, position, string, result):
-        if position == len(string) - 1:
-            result.append(string)
-            return
-        for i in range(position, len(string)):
-            temp = string[:position] + string[i] + string[position:i] + string[i + 1:]
-            self.perm(position + 1, temp, result)
-

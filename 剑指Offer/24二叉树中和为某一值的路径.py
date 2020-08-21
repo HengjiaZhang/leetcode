@@ -12,25 +12,57 @@ class TreeNode:
         self.right = None
 
 
-class Solution:
+class Solution1:
     # 返回二维列表，内部每个列表表示找到的路径
-    # 递归
+    # 先找到所有路径，再对每个路径分别判断和是否为expectNumber
+    def __init__(self):
+        self.path = []
+
     def FindPath(self, root, expectNumber):
+        # write code here
         if root is None:
             return []
+        self.GetPath(root, [root.val])
         result = []
-        self.sums = expectNumber
-        self.DFS(root, result, [root.val])
+        for i in self.path:
+            if sum(i) == expectNumber:
+                result.append(i)
         return result
 
-    def DFS(self, root, result, path):
-        if root.left is None and root.right is None and sum(path) == self.sums:
-            result.append(path)
-        if root.left is not None:
-            self.DFS(root.left, result, path + [root.left.val])
-        if root.right is not None:
-            self.DFS(root.right, result, path + [root.right.val])
+    def GetPath(self, root, path):
+        if root.left is None and root.right is None:
+            self.path.append(path)
+        if root.left:
+            self.GetPath(root.left, path + [root.left.val])
+        if root.right:
+            self.GetPath(root.right, path + [root.right.val])
 
+
+class Solution2:
+    # 返回二维列表，内部每个列表表示找到的路径
+    # 添加路径的时候直接判断
+    def __init__(self):
+        self.path = []
+
+    def FindPath(self, root, expectNumber):
+        # write code here
+        if root is None:
+            return []
+        self.expectNumber = expectNumber
+        self.GetPath(root, [root.val])
+        return self.path
+
+    def GetPath(self, root, path):
+        if root.left is None and root.right is None and sum(path) == self.expectNumber:
+            self.path.append(path)
+        if root.left:
+            self.GetPath(root.left, path + [root.left.val])
+        if root.right:
+            self.GetPath(root.right, path + [root.right.val])
+
+
+class Solution3:
+    # 返回二维列表，内部每个列表表示找到的路径
     # 迭代
     def FindPath2(self, root, expectNumber):
         # write code here

@@ -32,7 +32,6 @@ class Solution:
     functools module in the standard library.
     """
     def PrintMinNumber(self, numbers):
-        # write code here
         s = list(map(str, numbers))
         # s.sort(key=functools.cmp_to_key(self.my_cmp))
         s.sort(key=functools.cmp_to_key(lambda x, y: int(x + y) - int(y + x)))
