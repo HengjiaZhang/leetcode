@@ -15,16 +15,16 @@ class Solution:
         self.rows = None
         self.cols = None
         self.threshold = None
-        self.matrix = None
+        self.visited = None
 
     def movingCount(self, threshold, rows, cols):
         # write code here
         self.rows = rows
         self.cols = cols
-        self.matrix = [[0 for i in range(cols)] for j in range(rows)]
+        self.visited = [[0 for i in range(cols)] for j in range(rows)]
         self.threshold = threshold
         self.dfs(0, 0)
-        return sum(sum(i) for i in self.matrix)
+        return sum(sum(i) for i in self.visited)
 
     # 深度优先搜索
     def dfs(self, i, j):
@@ -32,13 +32,13 @@ class Solution:
         if i >= self.rows or j >= self.cols or i < 0 or j < 0:
             return
         # 已经访问过了
-        if self.matrix[i][j] == 1:
+        if self.visited[i][j] == 1:
             return
         # 行坐标和列坐标的数位之和大于threshold
         if self.get_sum(i, j) > self.threshold:
             return
 
-        self.matrix[i][j] = 1
+        self.visited[i][j] = 1
         self.dfs(i, j + 1)
         self.dfs(i + 1, j)
         self.dfs(i, j - 1)
